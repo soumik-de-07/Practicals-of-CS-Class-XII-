@@ -1,39 +1,31 @@
 import pickle
 
-file = open("student.dat", "wb")
+f = open("student.dat", "wb")
 
-n = int(input("Enter number of students: "))
+for i in range(int(input("Enter number: "))):
+    r = int(input("Roll: "))
+    n = input("Name: ")
+    pickle.dump([r, n], f)
 
-for i in range(n):
-    name = input("Enter name: ")
-    roll = int(input("Enter roll number: "))
+f.close()
 
-    data = [roll, name]   
 
-    pickle.dump(data, file)
+f = open("student.dat", "rb")
 
-file.close()
-
-import pickle
-
-file = open("student.dat", "rb")
-
-found = False
-search_roll = int(input("Enter roll number to search: "))
+x = int(input("Search roll: "))
+found = 0
 
 try:
     while True:
-        data = pickle.load(file)
-
-        if data[0] == search_roll:
-            print("Name:", data[1])
-            found = True
+        d = pickle.load(f)
+        if d[0] == x:
+            print("Name:", d[1])
+            found = 1
             break
-
-except EOFError:
+except:
     pass
 
-if not found:
-    print("Record not found")
+if found == 0:
+    print("Not found")
 
-file.close()
+f.close()
